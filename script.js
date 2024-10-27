@@ -1,5 +1,7 @@
+"use strict";
 var numSelected = null;
 var tileSelected = null;
+var delSelected = null;
 var errors = 0;
 var gameStart = 0;
 
@@ -122,7 +124,6 @@ function selectTile() {
             this.style.color = "blue";
             this.classList.add("true");
             console.log(`${numSelected.id} is correct answer in ${r}/${c} coord`);
-            delActive();
         } else {
             errors += 1;
             document.getElementById("errors").innerText = errors;
@@ -132,10 +133,14 @@ function selectTile() {
             delActive();
         }
     }
+    if (delSelected) {
+        delValue(this.id);
+    }
 }
 
 
 function writeNumber() {
+    delSelected = null;
     let digits = document.getElementsByClassName("number");
     let pencil = document.getElementsByClassName("pencil")[0];
     let ersaer = document.getElementsByClassName("eraser")[0];
@@ -153,30 +158,40 @@ function delActive() {
     let ersaer = document.getElementsByClassName("eraser")[0];
     ersaer.style.pointerEvents = "auto";
     ersaer.style.opacity = "100%";
+
 }
 
 function deleteNumber() {
     numSelected = null;
+    delSelected = 1;
     let digits = document.getElementsByClassName("number");
     let ersaer = document.getElementsByClassName("eraser")[0];
     let pencil = document.getElementsByClassName("pencil")[0];
     let selectedNumber = document.getElementsByClassName("number-selected")[0];
-    let tile = document.getElementsByClassName("tile");
-
     for (let i = 0; i < digits.length; i++) {
         digits[i].style.pointerEvents = "none";
         digits[i].style.opacity = "50%";
     }
     ersaer.classList.add("eraser-selected");
-    // tile.addEventListener("click", deletValue);
     pencil.classList.remove("pencil-selected");
-    selectedNumber.classList.remove("number-selected");
-    console.log("you can delete your answers");
+    if (selectedNumber) {
+        if (selectedNumber.classList.contains("number-selected")) {
+            selectedNumber.classList.remove("number-selected");
+            console.log("you can delete your answers");
+        } else {
+            console.log("you can delete your answers");
+        }
+    } else {
+        console.log("you can delete your answers");
+    }
 }
 
-function deletValue() {
-    let tile = document.getElementsByClassName("tile");
-    if (tile.classList.contains("game")) {
-        console.log("you can't delete the game col's!");
+function delValue(thisItam) {
+    let tile = document.getElementById(thisItam);
+    console.log(tile);
+    if(tile.classList.contains("false")){
+        console.log("false");
+        tile.innerText = "";
     }
+
 }
