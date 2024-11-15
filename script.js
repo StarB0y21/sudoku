@@ -5,6 +5,8 @@ var delSelected = null;
 var errors = 0;
 var gameStart = 0;
 
+var tileIs = null;
+
 var board = [
     "--74916-5",
     "2---6-3-9",
@@ -29,14 +31,38 @@ var solution = [
     "812945763"
 ]
 
+let endGame = [
+    "387491625",
+    "241568379",
+    "569327418",
+    "758619234",
+    "123784596",
+    "496253187",
+    "934176852",
+    "675832941",
+    "812945763"
+]
+
+console.log(`program variables:`);
+console.log(`selected number: ${numSelected}`);
+console.log(`slecter tile: ${tileSelected}`);
+console.log(`delete selected: ${delSelected}`);
+console.log(`error counter: ${errors}`);
+console.log(`stert game: ${gameStart}`);
+console.log(`game board: ${board}`);
+console.log(`game board solution: ${solution}`);
+console.log(`end game: ${endGame}`);
+console.log("______________");
+
 // start game function
 function startGame() {
     if (gameStart != 1) {
         setGame();
         gameStart += 1;
-        console.log("game start condition:" + gameStart);
+        console.log("game started, game start condition:" + gameStart);
+        console.log("______________");
     } else {
-        window.alert("Game has been started");
+        window.alert("you can't start game again! Game has been started");
     }
 }
 
@@ -47,36 +73,35 @@ function setGame() {
         let number = document.createElement("div");
         number.id = i;
         number.innerText = i;
-        number.addEventListener("click", selectNumber);
         number.classList.add("number");
+        number.addEventListener("click", () => putNumber(number));
         document.getElementById("digits").appendChild(number);
         console.log(`create digit number: ${i}`);
     }
     console.log("end create digits");
+    console.log("______________");
 
     let eraser = document.createElement("img");
     eraser.src = "icons8-eraser-96.png";
     eraser.classList.add("eraser");
     document.getElementById("digits").appendChild(eraser);
-    eraser.style.pointerEvents = "none";
-    eraser.style.opacity = "50%";
-    eraser.addEventListener("click", deleteNumber);
 
     let pencil = document.createElement("img");
     pencil.src = "icons8-pencil-100.png";
     pencil.classList.add("pencil");
     document.getElementById("digits").appendChild(pencil);
-    pencil.addEventListener("click", writeNumber);
 
     console.log("start create table game");
     for (let r = 0; r < 9; r++) {
         for (let c = 0; c < 9; c++) {
             let tile = document.createElement("div");
+
             tile.id = r.toString() + "-" + c.toString();
             if (board[r][c] != "-") {
                 tile.innerText = board[r][c];
                 tile.classList.add("tile-start");
                 tile.classList.add("game");
+                tile.style.pointerEvents = "none";
             }
             if (r == 2 || r == 5) {
                 tile.classList.add("horizontal-line");
@@ -86,112 +111,153 @@ function setGame() {
                 tile.classList.add("vertical-line");
                 console.log("create vertical line in table game");
             }
-            tile.addEventListener("click", selectTile);
             tile.classList.add("tile");
             document.getElementById("board").append(tile);
             console.log(`create table col and row coord: r= ${r} / c= ${c}`);
+
+            if (!tile.classList.contains("game")) {
+                tile.classList.add("game-cell");
+            }
+
+            tile.addEventListener("click", () => printNumbers(tile));
         }
     }
+
+    document.getElementById("digits").style.opacity = 0.5;
+    document.getElementById("digits").style.pointerEvents = "none";
     console.log("end create table game");
+    console.log("______________");
 }
 
 
-// set selected digit number
-function selectNumber() {
-    if (numSelected != null) {
-        numSelected.classList.remove("number-selected");
-        console.log("clear pereves selected number in digits");
+// get the selected col and put the digit inside it
+function printNumbers(thisItem) {
+    document.getElementById("digits").style.opacity = 1;
+    document.getElementById("digits").style.pointerEvents = "auto";
+    let thisItemId = thisItem.id;
+
+    if (tileIs != null && tileIs != thisItem) {
+        console.log("remove the previous selection");
+        tileIs.classList.remove("number-selected");
     }
-    numSelected = this;
-    numSelected.classList.add("number-selected");
-    console.log(`digit number selected / number is ${numSelected.innerText}`);
+
+    switch (true) {
+
+        case thisItem.classList.contains("game-cell"):
+            if (tileIs != thisItem || !thisItem.classList.contains("number-selected")) {
+                tileIs = thisItem;
+                tileIs.classList.add("number-selected");
+                console.log(`selected col is ${thisItemId}`);
+            } else {
+                tileIs.classList.remove("number-selected");
+                document.getElementById("digits").style.opacity = 0.5;
+                document.getElementById("digits").style.pointerEvents = "none";
+                tileIs = null;
+                console.log(`unselect this col ${thisItemId}`);
+            }
+            break;
+
+        case tileIs == thisItem:
+            console.log("unselect");
+            tileIs.classList.remove("number-selected");
+            tileIs = null;
+            break;
+
+        case tileIs == null:
+            console.log("empty");
+            break;
+
+        default:
+            console.log("No matching case found.");
+    }
 }
 
 
-// check the solution and count the mestiks
-function selectTile() {
-    if (numSelected) {
-        if (this.innerText != "") {
-            console.log("this block is full alredy");
-            return;
-        }
-        this.innerText = numSelected.id;
-        let coords = this.id.split("-");
+// check the answer
+function putNumber(thisItem) {
+
+    if (!tileIs.classList.contains("true") && !tileIs.classList.contains("game")) {
+        let coords = tileIs.id.split("-");
         let r = parseInt(coords[0]);
         let c = parseInt(coords[1]);
-        if (solution[r][c] == numSelected.id) {
-            this.innerText = numSelected.id;
-            this.style.color = "blue";
-            this.classList.add("true");
-            console.log(`${numSelected.id} is correct answer in ${r}/${c} coord`);
+
+        if (solution[r][c] == thisItem.id) {
+            let originalVal = solution[r][c];
+            let rArray = endGame[r].split('');
+            rArray[c] = originalVal;
+            endGame[r] = rArray.join('');
+
+            console.log(`solution: ${solution[r][c]}`);
+            console.log(`solution: ${solution}`);
+            console.log(`endGame: ${endGame[r][c]}`);
+            console.log(`endGame: ${endGame}`);
+
+            // for (let a = 0; a < 9; a++) {
+            //     for (let b = 0; b < 9; b++) {
+
+            //     }
+            // }
+
+            tileIs.innerText = thisItem.id;
+            tileIs.style.color = "blue";
+            tileIs.classList.add("true");
+            tileIs.classList.add("game");
+            tileIs.classList.remove("number-selected");
+            if (tileIs.classList.contains("false")) {
+                tileIs.classList.remove("false");
+                tileIs.classList.add("game");
+                tileIs.classList.remove("number-selected");
+                let originalVal = solution[r][c];
+                let rArray = endGame[r].split('');
+                rArray[c] = originalVal;
+                endGame[r] = rArray.join('');
+                console.log(`switch to true answer in ${tileIs.id}`);
+            }
+            document.getElementById("digits").style.opacity = 0.5;
+            document.getElementById("digits").style.pointerEvents = "none";
+            console.log(tileIs.id);
+            console.log(thisItem.id);
+            console.log(`${thisItem.id} is correct answer in ${r}/${c} coord`);
+            console.log("______________");
         } else {
+            tileIs.innerText = thisItem.id;
             errors += 1;
             document.getElementById("errors").innerText = errors;
-            this.style.color = "red";
-            this.classList.add("false");
-            console.log(`${numSelected.id} is wrong answer in ${r}/${c} coord`);
-            delActive();
-        }
-    }
-    if (delSelected) {
-        delValue(this.id);
-    }
-}
-
-
-function writeNumber() {
-    delSelected = null;
-    let digits = document.getElementsByClassName("number");
-    let pencil = document.getElementsByClassName("pencil")[0];
-    let ersaer = document.getElementsByClassName("eraser")[0];
-
-    for (let i = 0; i < digits.length; i++) {
-        digits[i].style.pointerEvents = "auto";
-        digits[i].style.opacity = "100%";
-    }
-    pencil.classList.add("pencil-selected");
-    ersaer.classList.remove("eraser-selected");
-    console.log("you can input nubmers now!");
-}
-
-function delActive() {
-    let ersaer = document.getElementsByClassName("eraser")[0];
-    ersaer.style.pointerEvents = "auto";
-    ersaer.style.opacity = "100%";
-
-}
-
-function deleteNumber() {
-    numSelected = null;
-    delSelected = 1;
-    let digits = document.getElementsByClassName("number");
-    let ersaer = document.getElementsByClassName("eraser")[0];
-    let pencil = document.getElementsByClassName("pencil")[0];
-    let selectedNumber = document.getElementsByClassName("number-selected")[0];
-    for (let i = 0; i < digits.length; i++) {
-        digits[i].style.pointerEvents = "none";
-        digits[i].style.opacity = "50%";
-    }
-    ersaer.classList.add("eraser-selected");
-    pencil.classList.remove("pencil-selected");
-    if (selectedNumber) {
-        if (selectedNumber.classList.contains("number-selected")) {
-            selectedNumber.classList.remove("number-selected");
-            console.log("you can delete your answers");
-        } else {
-            console.log("you can delete your answers");
+            tileIs.style.color = "red";
+            tileIs.classList.add("false");
+            console.log(`${thisItem.id} is wrong answer in ${r}/${c} coord`);
+            console.log("______________");
         }
     } else {
-        console.log("you can delete your answers");
+        tileIs.classList.remove("number-selected");
+        document.getElementById("digits").style.opacity = 0.5;
+        document.getElementById("digits").style.pointerEvents = "none";
+        tileIs = null;
+        console.log("you can't make change on true answers!");
+    }
+
+    if (arraysEqual(endGame, solution)) {
+        document.getElementById("board").style.pointerEvents = "none";
+        document.getElementById("digits").style.pointerEvents = "none";
+        window.alert(`you end game with ${errors} error!`);
+        // gameStart = 0;
+        // errors = 0;
+    } else {
+        console.log("keep playing");
     }
 }
 
-function delValue(thisItam) {
-    let tile = document.getElementById(thisItam);
-    console.log(tile);
-    if(tile.classList.contains("false")){
-        console.log("false");
-        tile.innerText = "";
+function arraysEqual(arr1, arr2) {
+    if (arr1.length !== arr2.length) {
+        window.alert("this is a unexpected crash in program!");
+        return false;
+    } else {
+        for (let i = 0; i < arr1.length; i++) {
+            if (arr1[i] !== arr2[i]) {
+                return false;
+            } else {
+                return true;
+            }
+        }
     }
-
 }

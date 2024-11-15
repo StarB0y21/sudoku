@@ -30,8 +30,8 @@ hr {
     align-items: center;
 }
 
-.tile:hover {
-    background-color: gray;
+.tile.game-cell:hover {
+    background-color: lightgray;
 }
 
 #digits {
@@ -52,8 +52,10 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
-    pointer-events: none;
-    opacity: 50%;
+}
+
+.number:hover {
+    background-color: lightgray;
 }
 
 .eraser {
@@ -115,4 +117,8 @@ hr {
 
 #start-button:hover {
     background-color: whitesmoke;
+}
+
+.game {
+    pointer-events: none;
 }
