@@ -70,6 +70,10 @@ hr {
     align-items: center;
 }
 
+.eraser:hover {
+    background-color: lightgray;
+}
+
 .eraser-selected {
     background-color: gray;
 }
@@ -84,6 +88,10 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.pencil:hover {
+    background-color: lightgray;
 }
 
 .pencil-selected {

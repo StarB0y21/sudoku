@@ -84,11 +84,13 @@ function setGame() {
     let eraser = document.createElement("img");
     eraser.src = "icons8-eraser-96.png";
     eraser.classList.add("eraser");
+    eraser.addEventListener("click", () => eraserAnswer(tileIs));
     document.getElementById("digits").appendChild(eraser);
 
     let pencil = document.createElement("img");
     pencil.src = "icons8-pencil-100.png";
     pencil.classList.add("pencil");
+    pencil.addEventListener("click", () => toMark(tileIs));
     document.getElementById("digits").appendChild(pencil);
 
     console.log("start create table game");
@@ -260,4 +262,38 @@ function arraysEqual(arr1, arr2) {
             }
         }
     }
+}
+
+function eraserAnswer(thisItem) {
+    if (thisItem.classList.contains("false")) {
+        thisItem.innerText = "";
+        console.log("delete");
+    } else {
+        console.log("wtf?");
+    }
+    console.log(thisItem);
+}
+
+function toMark(thisItem) {
+    let pencil = document.getElementsByClassName("pencil")[0];
+    let numbers = document.getElementsByClassName("number");
+    let selectedTile = thisItem;
+
+    if (pencil.classList.contains("pencil-selected")) {
+        pencil.classList.remove("pencil-selected");
+    } else {
+        pencil.classList.add("pencil-selected");
+        for (let p = 0; p < numbers.length; p++) {
+            console.log(numbers[p]);
+            numbers[p].removeEventListener("click", putNumber);
+            numbers[p].addEventListener("click", () => putMark(numbers));
+        }
+
+        console.log(thisItem);
+        console.log(selectedTile);
+    }
+}
+
+function putMark(thisItem) {
+    console.log(thisItem);
 }
