@@ -1,6 +1,7 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
+    background-color: darkslategray;
 }
 
 hr {
@@ -28,10 +29,11 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: slategray;
 }
 
 .tile.game-cell:hover {
-    background-color: lightgray;
+    background-color: steelblue;
 }
 
 #digits {
@@ -40,6 +42,8 @@ hr {
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
+    background-color: slategray;
+    border-radius: 10px;
 }
 
 .number {
@@ -52,10 +56,13 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: powderblue;
+    background-color: lightseagreen;
+    border-radius: 10px;
 }
 
 .number:hover {
-    background-color: lightgray;
+    background-color: steelblue;
 }
 
 .eraser {
@@ -68,10 +75,12 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: darkred;
+    border-radius: 10px;
 }
 
 .eraser:hover {
-    background-color: lightgray;
+    background-color: indianred;
 }
 
 .eraser-selected {
@@ -88,22 +97,25 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: forestgreen;
+    border-radius: 10px;
 }
 
 .pencil:hover {
-    background-color: lightgray;
+    background-color: mediumseagreen;
 }
 
 .pencil-selected {
-    background-color: gray;
+    background-color: mediumseagreen;
 }
 
 .number-selected {
-    background-color: gray;
+    background-color: darkcyan;
 }
 
 .tile-start {
-    background-color: whitesmoke;
+    color: darkcyan;
+    background-color: mediumaquamarine;
 }
 
 .horizontal-line {
@@ -121,12 +133,23 @@ hr {
     padding: 3px;
     width: 100px;
     height: 45px;
+    background-color: lightsteelblue;
+    border-radius: 10px;
 }
 
 #start-button:hover {
-    background-color: whitesmoke;
+    background-color: steelblue;
 }
 
 .game {
     pointer-events: none;
+}
+
+.mark {
+    line-break: anywhere;
+    font-size: 14px;
+}
+
+.hovered-line {
+    box-shadow: 0px 0px 6px 3px black
 }
