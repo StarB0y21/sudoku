@@ -21,20 +21,59 @@ body {
     justify-content: center;
 }
 
+#start {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background: rgba(42, 131, 95, 0.41);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10.5px);
+    -webkit-backdrop-filter: blur(10.5px);
+    z-index: 1000;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+#start-button {
+    border: 1px solid #abe5b3;
+    background-color: #8bbb92;
+    width: 120px;
+    height: 35px;
+    border-radius: 4px;
+    color: #12544f;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 2px 4px 8px 0px #000000;
+}
+
+#start-button:hover {
+    cursor: pointer;
+    box-shadow: none;
+}
+
 #game-status,
 #game-tools {
     background-color: #12544f;
 }
 
 #game-status {
-    width: 800px;
-    height: 95px;
     display: flex;
     flex-wrap: nowrap;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     border-radius: 8px;
+    width: 220px;
+    position: fixed;
+    top: 220px;
+    right: 30px;
+}
+
+#game-status-title {
+    color: #abe5b3;
 }
 
 #wrong-titile,
@@ -52,41 +91,33 @@ body {
     font-weight: bold;
 }
 
+#timer {
+    color: #b4bb8b;
+}
+
 #game-board {
     background-color: #2a835f;
     width: 650px;
     height: 650px;
 }
 
-/* #game-tools {
-    width: 800px;
-    height: 110px;
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+#game-tools {
+    position: fixed;
+    top: 220px;
+    left: 30px;
+    background-color: rgba(139, 156, 187, 0.4);
+    color: #8bbb92;
     border-radius: 8px;
-} */
+    border: 1px solid #abe5b3;
+}
 
 #numbers {
     width: 220px;
     height: 220px;
     display: flex;
-    position: fixed;
-    top: 40vh;
-    right: 30px;
     flex-wrap: wrap;
     justify-content: space-evenly;
-}
-
-#numbers,
-#tools {
-    background-color: rgba(139, 156, 187, 0.4);
     padding: 15px;
-    color: #8bbb92;
-    border-radius: 8px;
-    border: 1px solid #abe5b3;
 }
 
 #number-item-title {
@@ -113,9 +144,6 @@ body {
 }
 
 #tools {
-    position: fixed;
-    top: 40vh;
-    left: 30px;
     display: flex;
     justify-content: space-around;
     flex-wrap: nowrap;

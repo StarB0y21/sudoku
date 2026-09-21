@@ -6,38 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sudoku</title>
     <link rel="stylesheet" href="style/main.css">
+    <script src="style.js" type="module"></script>
+    <script src="script.js"></script>
 </head>
 
 <body>
     <div id="container">
+        <div id="start">
+            <button id="start-button" onclick="startGame()">Start game</button>
+        </div>
+
         <div id="game-status">
-            <p id="wrong-titile">Wrong:</p>
-            <span id="wrong-number">0</span>
+            <h2 id="game-status-title">Game Status</h2>
+            <p id="wrong-titile">Wrong: <span id="wrong-number">0</span></p>
+            <p id="timer">Time: <span>00:00:00</span></p>
         </div>
         <div id="game-board"></div>
-        <div id="numbers">
-            <p id="number-item-title">selected number: <span>Nothing</span></p>
-            <div class="tools" id="number1">1</div>
-            <div class="tools" id="number2">2</div>
-            <div class="tools" id="number3">3</div>
-            <div class="tools" id="number4">4</div>
-            <div class="tools" id="number5">5</div>
-            <div class="tools" id="number6">6</div>
-            <div class="tools" id="number7">7</div>
-            <div class="tools" id="number8">8</div>
-            <div class="tools" id="number9">9</div>
-        </div>
-        <div id="tools">
-            <p id="tool-item-title">selected tool: <span id="selected-tool">Nothing</span></p>
-            <div class="tools" id="eraser">
-                <img src="img/eraser.png" alt="">
+        <div id="game-tools">
+            <div id="tools">
+                <p id="tool-item-title">selected tool: <span id="selected-tool">Nothing</span></p>
+                <div class="tools" id="eraser">
+                    <img src="img/eraser.png" alt="">
+                </div>
+                <div class="tools" id="pen">
+                    <img src="img/pencil.png" alt="">
+                </div>
             </div>
-            <div class="tools" id="pen">
-                <img src="img/pencil.png" alt="">
+            <div id="numbers">
+                <p id="number-item-title">selected number: <span>Nothing</span></p>
+                <div class="tools" id="number1">1</div>
+                <div class="tools" id="number2">2</div>
+                <div class="tools" id="number3">3</div>
+                <div class="tools" id="number4">4</div>
+                <div class="tools" id="number5">5</div>
+                <div class="tools" id="number6">6</div>
+                <div class="tools" id="number7">7</div>
+                <div class="tools" id="number8">8</div>
+                <div class="tools" id="number9">9</div>
             </div>
         </div>
-        <!-- <div id="game-tools">
-        </div> -->
     </div>
 </body>
 
