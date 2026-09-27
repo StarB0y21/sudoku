@@ -24,21 +24,30 @@ function removeStartDiv() {
 function createRow() {
     let row = [];
     for (let i = 0; i < 9; i++) {
-        let randomNumber = createRandomNumber();
-        console.log(`randomNumber:${randomNumber}`);
+        let leftNumbers = returnValidNumbers(row);
+        let randomNumber = createRandomNumber(leftNumbers);
+
         row.push(randomNumber);
     }
     return row;
 }
 
-function createRandomNumber() {
-    let min = 1;
-    let max = 10;
+function returnValidNumbers(row) {
+    let leftNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let validNumbers = leftNumbers.filter((e) => !row.includes(e));
+    return validNumbers;
+}
+
+function createRandomNumber(numbers) {
+
+    let min = 0;
+    let max = numbers.length;
 
     const minCeiled = Math.ceil(min);
     const maxFloored = Math.floor(max);
 
-    let randomNumber = Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+    let randomIndex = Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+    let randomNumber = numbers[randomIndex];
 
     return randomNumber;
 }
