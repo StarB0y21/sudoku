@@ -46,7 +46,7 @@ td {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    transition: all 0.3s;
+    transition: all 0.4s;
 }
 
 #start-button {

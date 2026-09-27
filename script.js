@@ -4,23 +4,15 @@ function startGame() {
 
     removeStartDiv();
 
-    let rows = [];
+    let table = [];
 
     for (let i = 0; i < 9; i++) {
         let row = createRow();
-
-        // if (i > 1) {
-        //     console.log(rows);
-        //     console.log("0");
-        // }
-
-        rows.push(row);
+        table.push(row);
     }
 
-    createTable(rows);
-
-    // console.log(rows);
-
+    console.log(table);
+    createTable(table);
 }
 
 function removeStartDiv() {
@@ -33,13 +25,7 @@ function createRow() {
     let row = [];
     for (let i = 0; i < 9; i++) {
         let randomNumber = createRandomNumber();
-        let duplicationResualt = checkIfDuplicate(randomNumber, row);
-
-        if (duplicationResualt) {
-            var newRandomNumber = replaceDuplicateNumber(row, duplicationResualt);
-            randomNumber = newRandomNumber;
-        }
-
+        console.log(`randomNumber:${randomNumber}`);
         row.push(randomNumber);
     }
     return row;
@@ -57,22 +43,6 @@ function createRandomNumber() {
     return randomNumber;
 }
 
-function checkIfDuplicate(randomNumber, numbers) {
-    if (numbers.includes(randomNumber)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function replaceDuplicateNumber(row, duplicationResualt) {
-    do {
-        var newRandomNumber = createRandomNumber();
-        duplicationResualt = checkIfDuplicate(newRandomNumber, row);
-    } while (duplicationResualt);
-    return newRandomNumber;
-}
-
 function createTable(rows) {
     let gameBoard = document.getElementById('game-board');
     let theTable = document.createElement('table');
@@ -84,7 +54,7 @@ function createTable(rows) {
         for (let j = 0; j < rows[i].length; j++) {
 
             let tableData = document.createElement('td');
-            
+
             tableData.innerText = rows[i][j];
             tableRow.appendChild(tableData);
         }
@@ -92,6 +62,6 @@ function createTable(rows) {
         theTable.appendChild(tableRow);
 
     }
-    
+
     gameBoard.appendChild(theTable);
 }
