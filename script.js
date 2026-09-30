@@ -6,34 +6,46 @@ function startGame() {
     let gameBoard = createGameBoard();
 }
 
+function removeStartDiv() {
+    let startDiv = document.getElementById('start');
+    startDiv.style.pointerEvents = "unset";
+    startDiv.style.display = "none";
+}
+
 function createGameBoard() {
     let gameBoard = [];
-    for (let i = 0; i < 3; i++) {
-        let row = createGameBoardRow();
+    for (let boardRowIndex = 0; boardRowIndex < 3; boardRowIndex++) {
+        let row = createGameBoardRow(boardRowIndex);
         gameBoard.push(row);
     }
     console.log(gameBoard);
 }
 
-function createGameBoardRow() {
+function createGameBoardRow(boardRowIndex) {
     let row = [];
-    for (let i = 0; i < 3; i++) {
-        let box = createbox();
+    for (let boxRowIndex = 0; boxRowIndex < 3; boxRowIndex++) {
+        let box = createbox(boardRowIndex, boxRowIndex);
         row.push(box);
     }
     return row;
 }
 
-function createbox() {
+function createbox(boardRowIndex, boxRowIndex) {
     let box = [];
     let usedNumbers = [];
-    for (let j = 0; j < 3; j++) {
+    for (let columnIndex = 0; columnIndex < 3; columnIndex++) {
         let row = [];
-        for (let i = 0; i < 3; i++) {
+        for (let rowIndex = 0; rowIndex < 3; rowIndex++) {
             let leftNumbers = returnValidNumbers(usedNumbers);
             let randomNumber = createRandomNumber(leftNumbers);
             usedNumbers.push(randomNumber);
             row.push(randomNumber);
+            console.log(
+                "boardRowIndex", boardRowIndex,
+                "boxRowIndex", boxRowIndex,
+                "columnIndex", columnIndex,
+                "rowIndex", rowIndex
+            );
         }
         box.push(row);
     }
@@ -57,10 +69,4 @@ function createRandomNumber(numbers) {
     let randomNumber = numbers[randomIndex];
 
     return randomNumber;
-}
-
-function removeStartDiv() {
-    let startDiv = document.getElementById('start');
-    startDiv.style.pointerEvents = "unset";
-    startDiv.style.display = "none";
 }
