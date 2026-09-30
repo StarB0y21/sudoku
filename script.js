@@ -3,43 +3,50 @@
 function startGame() {
 
     removeStartDiv();
+    let gameBoard = createGameBoard();
+}
 
-    let table = [];
-
-    for (let i = 0; i < 9; i++) {
-        let row = createRow();
-        table.push(row);
+function createGameBoard() {
+    let gameBoard = [];
+    for (let i = 0; i < 3; i++) {
+        let row = createGameBoardRow();
+        gameBoard.push(row);
     }
-
-    console.log(table);
-    createTable(table);
+    console.log(gameBoard);
 }
 
-function removeStartDiv() {
-    let startDiv = document.getElementById('start');
-    startDiv.style.pointerEvents = "unset";
-    startDiv.style.display = "none";
-}
-
-function createRow() {
+function createGameBoardRow() {
     let row = [];
-    for (let i = 0; i < 9; i++) {
-        let leftNumbers = returnValidNumbers(row);
-        let randomNumber = createRandomNumber(leftNumbers);
-
-        row.push(randomNumber);
+    for (let i = 0; i < 3; i++) {
+        let box = createbox();
+        row.push(box);
     }
     return row;
 }
 
-function returnValidNumbers(row) {
+function createbox() {
+    let box = [];
+    let usedNumbers = [];
+    for (let j = 0; j < 3; j++) {
+        let row = [];
+        for (let i = 0; i < 3; i++) {
+            let leftNumbers = returnValidNumbers(usedNumbers);
+            let randomNumber = createRandomNumber(leftNumbers);
+            usedNumbers.push(randomNumber);
+            row.push(randomNumber);
+        }
+        box.push(row);
+    }
+    return box;
+}
+
+function returnValidNumbers(numbers) {
     let leftNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    let validNumbers = leftNumbers.filter((e) => !row.includes(e));
-    return validNumbers;
+    let validRowNumbers = leftNumbers.filter((e) => !numbers.includes(e));
+    return validRowNumbers;
 }
 
 function createRandomNumber(numbers) {
-
     let min = 0;
     let max = numbers.length;
 
@@ -52,25 +59,8 @@ function createRandomNumber(numbers) {
     return randomNumber;
 }
 
-function createTable(rows) {
-    let gameBoard = document.getElementById('game-board');
-    let theTable = document.createElement('table');
-
-    for (let i = 0; i < rows.length; i++) {
-
-        let tableRow = document.createElement('tr');
-
-        for (let j = 0; j < rows[i].length; j++) {
-
-            let tableData = document.createElement('td');
-
-            tableData.innerText = rows[i][j];
-            tableRow.appendChild(tableData);
-        }
-
-        theTable.appendChild(tableRow);
-
-    }
-
-    gameBoard.appendChild(theTable);
+function removeStartDiv() {
+    let startDiv = document.getElementById('start');
+    startDiv.style.pointerEvents = "unset";
+    startDiv.style.display = "none";
 }
