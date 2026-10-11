@@ -4,6 +4,8 @@ function startGame() {
 
     removeStartDiv();
     let gameBoard = createGameBoard();
+
+    createTable(gameBoard);
 }
 
 function removeStartDiv() {
@@ -15,40 +17,37 @@ function removeStartDiv() {
 function createGameBoard() {
     let gameBoard = [];
     for (let boardRowIndex = 0; boardRowIndex < 3; boardRowIndex++) {
-        let row = createGameBoardRow(boardRowIndex);
+        let row = [];
+
+        for (let boardColumnIndex = 0; boardColumnIndex < 3; boardColumnIndex++) {
+            let box = createbox(row);
+
+            row.push(box);
+        }
+
         gameBoard.push(row);
     }
     console.log(gameBoard);
+    return gameBoard;
 }
 
-function createGameBoardRow(boardRowIndex) {
-    let row = [];
-    for (let boxRowIndex = 0; boxRowIndex < 3; boxRowIndex++) {
-        let box = createbox(boardRowIndex, boxRowIndex);
-        row.push(box);
-    }
-    return row;
-}
-
-function createbox(boardRowIndex, boxRowIndex) {
+function createbox(boardRows) {
     let box = [];
     let usedNumbers = [];
-    for (let columnIndex = 0; columnIndex < 3; columnIndex++) {
+    for (let rowIndex = 0; rowIndex < 3; rowIndex++) {
         let row = [];
-        for (let rowIndex = 0; rowIndex < 3; rowIndex++) {
+
+        for (let columnIndex = 0; columnIndex < 3; columnIndex++) {
             let leftNumbers = returnValidNumbers(usedNumbers);
             let randomNumber = createRandomNumber(leftNumbers);
+
             usedNumbers.push(randomNumber);
             row.push(randomNumber);
-            console.log(
-                "boardRowIndex", boardRowIndex,
-                "boxRowIndex", boxRowIndex,
-                "columnIndex", columnIndex,
-                "rowIndex", rowIndex
-            );
         }
+
         box.push(row);
     }
+    console.log("---------------");
     return box;
 }
 
@@ -69,4 +68,18 @@ function createRandomNumber(numbers) {
     let randomNumber = numbers[randomIndex];
 
     return randomNumber;
+}
+
+function createTable(gameBoard) {
+    let gameArea = document.getElementById('game-board');
+    console.log(gameBoard.flat(4));
+    for (let i = 0; i < gameBoard.length; i++) {
+        for (let j = 0; j < gameBoard[i].length; j++) {
+            for (let y = 0; y < gameBoard[i][j].length; y++) {
+                for (let x = 0; x < gameBoard[i][j][y].length; x++) {
+                    console.log(gameBoard[i][j][y][x]);
+                }
+            }
+        }
+    }
 }
